@@ -15,10 +15,16 @@ public class GHHandScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Store the current hand, and check if the Finger is pinching
         var hand = GetComponent<OVRHand>();
         bool isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
 
-        if (isIndexFingerPinching)
+        //Store the active controller, and check for value of the trigger on the left controller
+        OVRInput.Controller activeController = OVRInput.GetActiveController();
+        float indexTrigger = OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger);
+
+        //Test if the finger is pinching, OR if the indexTrigger is pressed
+        if (isIndexFingerPinching || indexTrigger != 0.0f)
         {
             //is pinching., do something
             theCube.SetGreen();
